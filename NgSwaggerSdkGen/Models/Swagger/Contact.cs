@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NgSwaggerSdkGen.Models {
-    public class SwaggerContact {
+namespace NgSwaggerSdkGen.Models.Swagger {
+    public class Contact {
         public string name;
 
         public string url;

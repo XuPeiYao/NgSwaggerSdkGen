@@ -3,8 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace NgSwaggerSdkGen.Models {
-    public class SwaggerParameter : SwaggerPartialSchema {
+namespace NgSwaggerSdkGen.Models.Swagger {
+    public class Parameter : PartialSchema {
         [JsonProperty("$ref")]
         public string @ref;
 
@@ -16,6 +16,6 @@ namespace NgSwaggerSdkGen.Models {
 
         public bool? required;
 
-        public SwaggerSchema schema;
+        public Schema schema;
     }
 }

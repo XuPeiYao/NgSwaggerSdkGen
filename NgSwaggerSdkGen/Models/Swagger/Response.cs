@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NgSwaggerSdkGen.Models {
-    public class SwaggerResponse {
+namespace NgSwaggerSdkGen.Models.Swagger {
+    public class Response {
         public string description;
 
-        public SwaggerSchema schema;
+        public Schema schema;
 
-        public IDictionary<string, SwaggerHeader> headers;
+        public IDictionary<string, Header> headers;
 
         public object examples;
 

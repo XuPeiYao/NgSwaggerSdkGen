@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NgSwaggerSdkGen.Models {
-    public class SwaggerExternalDocs {
+namespace NgSwaggerSdkGen.Models.Swagger {
+    public class ExternalDocs {
         public string description;
 
         public string url;

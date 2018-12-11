@@ -1,10 +1,11 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
-namespace NgSwaggerSdkGen.Models {
-    public class SwaggerSchema {
+namespace NgSwaggerSdkGen.Models.Swagger {
+    public class Schema {
         [JsonProperty("$ref")]
         public string @ref;
 
@@ -48,24 +49,45 @@ namespace NgSwaggerSdkGen.Models {
 
         public string type;
 
-        public SwaggerSchema items;
+        [JsonProperty("items")]
+        public Schema items;
 
-        public IList<SwaggerSchema> allOf;
+        public IList<Schema> allOf;
 
-        public IDictionary<string, SwaggerSchema> properties;
+        public IDictionary<string, Schema> properties;
 
-        public SwaggerSchema additionalProperties;
+        public Schema additionalProperties;
 
         public string discriminator;
 
         public bool? readOnly;
 
-        public SwaggerXml xml;
+        public Xml xml;
 
-        public SwaggerExternalDocs externalDocs;
+        public ExternalDocs externalDocs;
 
         public object example;
 
         public Dictionary<string, object> vendorExtensions = new Dictionary<string, object>();
+
+        public string GetTypeString() {
+            string result = "";
+            switch (type) {
+                case "object":
+                    result = @ref;
+                    break;
+                case "array":
+                    return items.GetTypeString() + "[]";
+                default:
+                    result = type ?? @ref;
+                    break;
+            }
+
+            if (result?.StartsWith("#") ?? false) {
+                return PreProcessing.FixTypeName(result.Split('/').Last());
+            }
+
+            return result != null ? PreProcessing.FixTypeName(result) : null;
+        }
     }
 }

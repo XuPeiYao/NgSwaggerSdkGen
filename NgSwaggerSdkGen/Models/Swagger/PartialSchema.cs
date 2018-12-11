@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NgSwaggerSdkGen.Models {
-    public class SwaggerPartialSchema {
+namespace NgSwaggerSdkGen.Models.Swagger {
+    public class PartialSchema {
         public string type;
 
         public string format;
 
-        public SwaggerPartialSchema items;
+        public PartialSchema items;
 
         public string collectionFormat;
 

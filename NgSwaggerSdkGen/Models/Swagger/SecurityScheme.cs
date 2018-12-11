@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NgSwaggerSdkGen.Models {
-    public class SwaggerSecurityScheme {
+namespace NgSwaggerSdkGen.Models.Swagger {
+    public class SecurityScheme {
         public string type;
 
         public string description;
