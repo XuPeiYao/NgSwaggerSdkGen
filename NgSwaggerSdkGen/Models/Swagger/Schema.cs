@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace NgSwaggerSdkGen.Models.Swagger {
     public class Schema {
@@ -78,6 +79,11 @@ namespace NgSwaggerSdkGen.Models.Swagger {
                     break;
                 case "array":
                     return items.GetTypeString() + "[]";
+                case "string":
+                    if (@enum != null && @enum.Count > 0) {
+                        return $"({string.Join(" | ", @enum.Select(x => x is string ? "'" + Regex.Escape(x.ToString()) + "'" : x))})";
+                    }
+                    return "string";
                 default:
                     result = type ?? @ref;
                     break;
