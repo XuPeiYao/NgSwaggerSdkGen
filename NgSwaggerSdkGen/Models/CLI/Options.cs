@@ -13,5 +13,8 @@ namespace NgSwaggerSdkGen.Models.CLI {
 
         [Option('b', "base", Required = false, HelpText = "base href")]
         public string Base { get; set; }
+
+        [Option('m', "module", Required = false, HelpText = "module name", Default = "Sdk")]
+        public string Module { get; set; }
     }
 }

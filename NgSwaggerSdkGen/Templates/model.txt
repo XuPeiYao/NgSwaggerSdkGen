@@ -1,0 +1,17 @@
+﻿@using System.Linq
+@model NgSwaggerSdkGen.Models.View.NgModel;
+@foreach (var model in Model.Models) {
+<text>
+import { @(model) } from './@(NgSwaggerSdkGen.Program.ToCamelCase(model))';
+</text>
+}
+export class @(Model.Name){
+@foreach (var property in Model.Properties) {
+<text>
+    /**
+     * @(property.Description)
+     */
+    @(property.Name)? : @(property.Type);
+</text>
+}
+}

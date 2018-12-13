@@ -1,0 +1,17 @@
+﻿import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+
+export class Config{
+    static defaultOptions: {
+        headers?: HttpHeaders | {
+            [header: string]: string | string[];
+        };
+        observe: 'events';
+        params?: HttpParams | {
+            [param: string]: string | string[];
+        };
+        reportProgress?: boolean;
+        responseType: 'arraybuffer';
+        withCredentials?: boolean;
+    };
+    static onError: (error: any) => void;
+}
