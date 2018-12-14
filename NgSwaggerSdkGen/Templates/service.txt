@@ -1,0 +1,118 @@
+﻿@using System.Linq
+@using NgSwaggerSdkGen.Models.View;
+@model NgSwaggerSdkGen.Models.Gen.NgService;
+import { Injectable } from '@@angular/core';
+import { HttpClient } from '@@angular/common/http';
+import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { Config } from '../config';
+import { @(string.Join(", ", Model.Models)) } from '../models';
+
+@@Injectable({
+  providedIn: 'root'
+})
+export class @(Model.Name)Service {
+    constructor(private http: HttpClient) {}
+
+@foreach (var method in Model.Methods) {
+<text>
+    /**
+     * @(method.Description)
+     *
+    @foreach (var parameter in method.Parameters) {
+@:     * @@param @(parameter.Name) @(parameter.Description)
+    }
+     */
+    @(method.Name)(@foreach (var parameter in method.Parameters.OrderByDescending(x=>x.IsRequired)) {
+@:
+@:        @(parameter.Name)@(parameter.IsRequired ? "" : (parameter.Default == null ? "?" : "") ): @(parameter.Type)@(parameter.Default != null ? "=" + parameter.Default : "")@(parameter == method.Parameters.OrderByDescending(x=>x.IsRequired).Last() ? "" : ",")
+    }
+        ): Observable<@(method.ReturnType==null?"void":method.ReturnType)> {
+        let url = '@method.Url';
+@foreach (var inPath in method.Parameters.Where(x => x.In == "path")) {
+    <text>
+        url = url.replace('{@(inPath.Name)}', @inPath.Name);
+    </text>
+}
+        const queryList = [];
+@foreach (var inQuery in method.Parameters.Where(x => x.In == "query")) {
+    @if (inQuery.IsArray) {
+    <text>
+        for(const item of @(inQuery.Name)){
+            if (item) {
+                queryList.push('@(inQuery.Name)=' + encodeURIComponent(item));
+            }
+        }
+    </text>
+    } else {
+    <text>
+        if (@(inQuery.Name)) {
+            queryList.push('@(inQuery.Name)=' + encodeURIComponent(@(inQuery.Name).toString()));
+        }
+    </text>
+    }
+}
+        if(queryList.length > 0){
+            url += '?'+ queryList.join('&');
+        }
+@if (method.IsFormData) {
+    <text>
+        const formData = new FormData();
+    @foreach (var inFormData in method.Parameters.Where(x => x.In == "formData")) {
+        @if (inFormData.IsArray) {
+        <text>
+        for(var item of @inFormData.Name){
+            formData.append('@(inFormData.Name)', item);
+        }
+        </text>
+        } else {
+        <text>
+        formData.append('@(inFormData.Name)', @(inFormData.Name));
+        </text>
+        }
+    }
+        return this.http.@(method.Method)<@(method.ReturnType==null?"void":method.ReturnType)>(
+            url,
+            formData,
+            { headers: Config.defaultOptions }
+        ).pipe(
+          catchError((error: any, caught: Observable<any>) => {
+            Config.onError.next({error: error, caught: caught});
+            return null;
+          })
+        );
+    }
+    </text>
+} else {
+    @if (method.Method == "post" || method.Method == "put") {
+    <text>
+        return this.http.@(method.Method)<@(method.ReturnType==null?"void":method.ReturnType)>(
+            url,
+            @(method.Parameters.FirstOrDefault(x => x.In == "body")?.Name ?? "{}"),
+            { headers: Config.defaultOptions }
+        ).pipe(
+          catchError((error: any, caught: Observable<any>) => {
+            Config.onError.next({error: error, caught: caught});
+            return null;
+          })
+        );
+    }
+    </text>
+    } else {
+    <text>
+        return this.http.@(method.Method)<@(method.ReturnType==null?"void":method.ReturnType)>(
+            url,
+            { headers: Config.defaultOptions }
+        ).pipe(
+          catchError((error: any, caught: Observable<any>) => {
+            Config.onError.next({error: error, caught: caught});
+            return null;
+          })
+        );
+    }
+    </text>
+    }
+}
+</text>
+    }
+}

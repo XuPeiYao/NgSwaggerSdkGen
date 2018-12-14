@@ -1,0 +1,19 @@
+﻿@using System.Linq
+@model NgSwaggerSdkGen.Models.View.NgModule;
+import { NgModule } from '@@angular/core';
+import { CommonModule } from '@@angular/common';
+import { HttpClientModule, HttpHeaders } from '@@angular/common/http';
+import {
+    @(string.Join(",\r\n    ", Model.Services.Select(x => x + "Service")))
+} from './services';
+
+@@NgModule({
+  declarations: [],
+  imports: [CommonModule, HttpClientModule],
+  providers: [
+    @(string.Join(",\r\n    ", Model.Services.Select(x => x + "Service")))
+  ]
+})
+export class @(Model.Name)Module {
+
+}

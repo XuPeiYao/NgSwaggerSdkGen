@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NgSwaggerSdkGen.Models {
-    public class SwaggerInfo {
+namespace NgSwaggerSdkGen.Models.Swagger {
+    public class Info {
         public string version;
 
         public string title;
@@ -12,9 +12,9 @@ namespace NgSwaggerSdkGen.Models {
 
         public string termsOfService;
 
-        public SwaggerContact contact;
+        public Contact contact;
 
-        public SwaggerLicense license;
+        public License license;
 
         public Dictionary<string, object> vendorExtensions = new Dictionary<string, object>();
     }

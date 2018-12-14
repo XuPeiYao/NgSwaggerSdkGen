@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NgSwaggerSdkGen.Models {
-    public class SwaggerXml {
+namespace NgSwaggerSdkGen.Models.Swagger {
+    public class Xml {
         public string name;
 
         public string @namespace;
