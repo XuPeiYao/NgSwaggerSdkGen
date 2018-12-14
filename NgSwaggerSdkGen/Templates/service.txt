@@ -4,6 +4,7 @@
 import { Injectable } from '@@angular/core';
 import { HttpClient } from '@@angular/common/http';
 import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { Config } from '../config';
 import { @(string.Join(", ", Model.Models)) } from '../models';
 
@@ -74,6 +75,11 @@ export class @(Model.Name)Service {
             url,
             formData,
             { headers: Config.defaultOptions }
+        ).pipe(
+          catchError((error: any, caught: Observable<any>) => {
+            Config.onError.next({error: error, caught: caught});
+            return null;
+          })
         );
     }
     </text>
@@ -84,6 +90,11 @@ export class @(Model.Name)Service {
             url,
             @(method.Parameters.FirstOrDefault(x => x.In == "body")?.Name ?? "{}"),
             { headers: Config.defaultOptions }
+        ).pipe(
+          catchError((error: any, caught: Observable<any>) => {
+            Config.onError.next({error: error, caught: caught});
+            return null;
+          })
         );
     }
     </text>
@@ -92,6 +103,11 @@ export class @(Model.Name)Service {
         return this.http.@(method.Method)<@(method.ReturnType==null?"void":method.ReturnType)>(
             url,
             { headers: Config.defaultOptions }
+        ).pipe(
+          catchError((error: any, caught: Observable<any>) => {
+            Config.onError.next({error: error, caught: caught});
+            return null;
+          })
         );
     }
     </text>
