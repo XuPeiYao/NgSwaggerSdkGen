@@ -74,7 +74,7 @@ export class @(Model.Name)Service {
         return this.http.@(method.Method)<@(method.ReturnType==null?"void":method.ReturnType)>(
             url,
             formData,
-            { headers: Config.defaultOptions }
+            Config.defaultOptions
         ).pipe(
           catchError((error: any, caught: Observable<any>) => {
             Config.onError.next({error: error, caught: caught});
@@ -89,7 +89,7 @@ export class @(Model.Name)Service {
         return this.http.@(method.Method)<@(method.ReturnType==null?"void":method.ReturnType)>(
             url,
             @(method.Parameters.FirstOrDefault(x => x.In == "body")?.Name ?? "{}"),
-            { headers: Config.defaultOptions }
+            Config.defaultOptions
         ).pipe(
           catchError((error: any, caught: Observable<any>) => {
             Config.onError.next({error: error, caught: caught});
@@ -102,7 +102,7 @@ export class @(Model.Name)Service {
     <text>
         return this.http.@(method.Method)<@(method.ReturnType==null?"void":method.ReturnType)>(
             url,
-            { headers: Config.defaultOptions }
+            Config.defaultOptions
         ).pipe(
           catchError((error: any, caught: Observable<any>) => {
             Config.onError.next({error: error, caught: caught});
