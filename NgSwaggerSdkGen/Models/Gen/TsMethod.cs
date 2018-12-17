@@ -12,7 +12,7 @@ namespace NgSwaggerSdkGen.Models.Gen {
         public bool IsFormData {
             get {
                 if (Parameters == null) return false;
-                return (Method == "post" || Method == "put") && Parameters.Any(x => x.Type == "file");
+                return (Method == "post" || Method == "put") && Parameters.Any(x => x.Type == "File");
             }
         }
     }
