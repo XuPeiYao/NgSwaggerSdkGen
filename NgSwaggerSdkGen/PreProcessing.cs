@@ -26,7 +26,10 @@ namespace NgSwaggerSdkGen {
                 case "long":
                     return "number";
             }
-            return typeName.Replace("[", "").Replace("]", "").Replace("<", "").Replace(">", "");
+            return typeName.Replace("[]", "@!")
+                .Replace("[", "").Replace("]", "")
+                .Replace("<", "").Replace(">", "")
+                .Replace("@!", "[]");
         }
     }
 }
