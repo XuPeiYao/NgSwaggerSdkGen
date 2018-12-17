@@ -38,9 +38,11 @@ export class @(Model.Name)Service {
 @foreach (var inQuery in method.Parameters.Where(x => x.In == "query")) {
     @if (inQuery.IsArray) {
     <text>
-        for(const item of @(inQuery.Name)){
-            if (item) {
-                queryList.push('@(inQuery.Name)=' + encodeURIComponent(item));
+        if(@(inQuery.Name)){
+            for(const item of @(inQuery.Name)){
+                if (item) {
+                    queryList.push('@(inQuery.Name)=' + encodeURIComponent(item));
+                }
             }
         }
     </text>
