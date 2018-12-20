@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Config } from '../config';
 import { @(string.Join(", ", Model.Models)) } from '../models';
+import clone from 'clone';
 
 @@Injectable({
   providedIn: 'root'
@@ -88,10 +89,20 @@ export class @(Model.Name)Service {
 } else {
     @if (method.Method == "post" || method.Method == "put") {
     <text>
+        let tmpOptions = clone(Config.defaultOptions);
+
+		@if(method.Parameters.FirstOrDefault(x => x.In == "body")?.Type == "string"){
+			<text>
+        tmpOptions.headers['Content-Type'] = 'application/json';
+			</text>
+		}
+
         return this.http.@(method.Method)<@(method.ReturnType==null?"void":method.ReturnType)>(
             url,
-            @(method.Parameters.FirstOrDefault(x => x.In == "body")?.Name ?? "{}"),
-            Config.defaultOptions
+			@(method.Parameters.FirstOrDefault(x => x.In == "body")?.Type == "string" ? "JSON.stringify(" : "")
+            @(method.Parameters.FirstOrDefault(x => x.In == "body")?.Name ?? "{}")
+			@(method.Parameters.FirstOrDefault(x => x.In == "body")?.Type == "string" ? ")" : ""),
+            tmpOptions
         ).pipe(
           catchError((error: any, caught: Observable<any>) => {
             Config.onError.next({error: error, caught: caught});
