@@ -22,7 +22,7 @@ namespace NgSwaggerSdkGen {
 #if DEBUG
             args = new string[] {
                 "-s",
-                "http://localhost:16021/swagger/v1/swagger.json"
+                "http://magic-modules.hamastar.com.tw/swagger/v1/swagger.json"
             };
             //args = new string[] { "help" };
 #endif
