@@ -39,7 +39,7 @@ export class @(Model.Name)Service {
 @foreach (var inQuery in method.Parameters.Where(x => x.In == "query")) {
     @if (inQuery.IsArray) {
     <text>
-        if(@(inQuery.Name)){
+        if(@(inQuery.Name) !== null && @(inQuery.Name) !== undefined){
             for(const item of @(inQuery.Name)){
                 if (item) {
                     queryList.push('@(inQuery.Name)=' + encodeURIComponent(item));
@@ -49,7 +49,7 @@ export class @(Model.Name)Service {
     </text>
     } else {
     <text>
-        if (@(inQuery.Name)) {
+        if (@(inQuery.Name) !== null && @(inQuery.Name) !== undefined) {
             queryList.push('@(inQuery.Name)=' + encodeURIComponent(@(inQuery.Name).toString()));
         }
     </text>
