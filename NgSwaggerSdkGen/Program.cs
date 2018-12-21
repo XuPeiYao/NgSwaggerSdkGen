@@ -111,6 +111,11 @@ namespace NgSwaggerSdkGen {
                         if (paramInstance.Type == "file") {
                             paramInstance.Type = "File";
                         }
+
+                        if (param.collectionFormat == "multi" && param.type != "array") {
+                            paramInstance.Type += "[]";
+                        }
+
                         if (paramInstance.Default != null) {
                             if (paramInstance.Type == "string") {
                                 paramInstance.Default = '"' + Regex.Escape(param.@default.ToString()) + '"';
