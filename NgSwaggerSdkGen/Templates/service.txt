@@ -91,7 +91,7 @@ export class @(Model.Name)Service {
     <text>
         let tmpOptions = clone(Config.defaultOptions);
 
-		@if(method.Parameters.FirstOrDefault(x => x.In == "body")?.Type == "string" || method.Parameters.FirstOrDefault(x => x.In == "body")?.Type == "boolean" || method.Parameters.FirstOrDefault(x => x.In == "body")?.Type == "integer" ){
+		@if(method.Parameters.FirstOrDefault(x => x.In == "body")?.Type == "string" || method.Parameters.FirstOrDefault(x => x.In == "body")?.Type == "boolean" || method.Parameters.FirstOrDefault(x => x.In == "body")?.Type == "number" ){
 			<text>
         tmpOptions.headers['Content-Type'] = 'application/json';
 			</text>
