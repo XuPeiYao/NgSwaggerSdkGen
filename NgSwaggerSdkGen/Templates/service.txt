@@ -55,6 +55,7 @@ export class @(Model.Name)Service {
     </text>
     }
 }
+        window['lastRequestTime'] = new Date().getTime();
         if(queryList.length > 0){
             url += '?'+ queryList.join('&');
         }
