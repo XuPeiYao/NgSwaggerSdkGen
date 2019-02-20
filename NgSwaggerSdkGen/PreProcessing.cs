@@ -25,6 +25,8 @@ namespace NgSwaggerSdkGen {
                 case "double":
                 case "long":
                     return "number";
+                case "object":
+                    return "any";
             }
             return typeName.Replace("[]", "@!")
                 .Replace("[", "").Replace("]", "")
