@@ -15,4 +15,5 @@ export class Config{
     };
 
     static onError = new Subject<{error: any, caught: Observable<any>}>();
+    static authError = new Subject<any>();
 }
