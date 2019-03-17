@@ -32,7 +32,7 @@ export class @(Model.Name)Service {
         let url = '@method.Url';
 @foreach (var inPath in method.Parameters.Where(x => x.In == "path")) {
     <text>
-        url = url.replace('{@(inPath.Name)}', @inPath.Name);
+        url = url.replace('{@(inPath.Name)}', (@(inPath.Name)).toString());
     </text>
 }
         const queryList = [];

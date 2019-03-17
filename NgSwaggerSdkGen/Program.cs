@@ -22,7 +22,7 @@ namespace NgSwaggerSdkGen {
 #if DEBUG
             args = new string[] {
                 "-s",
-                "http://magic-modules.hamastar.com.tw/swagger/v1/swagger.json"
+                "https://lcy-stage.gofa.cloud/swagger/v1/swagger.json"
             };
             //args = new string[] { "help" };
 #endif
@@ -51,6 +51,28 @@ namespace NgSwaggerSdkGen {
             // Model產生
             var models = new List<TsModelType>();
             foreach (var definition in document.definitions) {
+                if (definition.Value.properties == null) {
+                    if (definition.Value.@enum == null || definition.Value.@enum.Count == 0) {
+                        try {
+                            models.Add(new TsModelType() {
+                                Name = definition.Key,
+                                Extends = definition.Value.allOf[0].GetTypeString(),
+                                Properties = definition.Value.allOf[1].properties
+                                .Select(x => new TsProperty() {
+                                    Type = x.Value.GetTypeString(),
+                                    Description = x.Value.description,
+                                    Name = x.Key
+                                }).ToList()
+                            });
+                        } catch {
+
+                        }
+                    } else {
+
+                    }
+                    continue;
+                }
+
                 models.Add(new TsModelType() {
                     Name = definition.Key,
                     Properties = definition.Value.properties
@@ -122,6 +144,12 @@ namespace NgSwaggerSdkGen {
                             }
                             if (paramInstance.Type == "boolean") {
                                 paramInstance.Default = paramInstance.Default.ToLower();
+                            }
+                            if (paramInstance.Type.StartsWith("(") &&
+                                param.@enum != null &&
+                                param.@enum.Count > 0 &&
+                                (param.@default is int || param.@default is long)) {
+                                paramInstance.Default = '"' + param.@enum[int.Parse(param.@default.ToString())].ToString() + '"';
                             }
                         }
                     }
