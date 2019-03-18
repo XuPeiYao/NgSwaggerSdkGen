@@ -5,7 +5,7 @@
 import { @(model) } from './@(NgSwaggerSdkGen.Program.ToCamelCase(model))';
 </text>
 }
-export class @(Model.Name){
+export class @(Model.Name) @if(Model.Extends != null){<text>extends </text> @Model.Extends}{
 @foreach (var property in Model.Properties) {
 <text>
     /**
