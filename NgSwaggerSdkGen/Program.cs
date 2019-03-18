@@ -13,6 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -178,21 +179,24 @@ namespace NgSwaggerSdkGen {
                         $"export * from './config';",
                         $"export * from './{ToCamelCase(options.Module)}.module';",
                         $""
-                    )
+                    ),
+                    Encoding.UTF8
                 );
 
             File.WriteAllText(
                 Path.Combine(options.Output, "models", "index.ts"),
                     string.Join("\r\n",
                         models.Select(x => $"export * from './{ToCamelCase(x.Name)}';")
-                    ) + "\r\n"
+                    ) + "\r\n",
+                    Encoding.UTF8
                 );
 
             File.WriteAllText(
                 Path.Combine(options.Output, "services", "index.ts"),
                     string.Join("\r\n",
                         services.Select(x => $"export * from './{ToCamelCase(x.Name)}.service';")
-                    ) + "\r\n"
+                    ) + "\r\n",
+                    Encoding.UTF8
                 );
             Console.WriteLine("OK");
             #endregion
@@ -201,7 +205,8 @@ namespace NgSwaggerSdkGen {
             Console.Write("建立config.ts...");
             File.WriteAllText(
                 Path.Combine(options.Output, "config.ts"),
-                File.ReadAllText("./Templates/config.txt"));
+                File.ReadAllText("./Templates/config.txt"),
+                Encoding.UTF8);
             Console.WriteLine("OK");
             #endregion
 
@@ -222,7 +227,7 @@ namespace NgSwaggerSdkGen {
                         typeof(NgModule)
                     ).GetAwaiter().GetResult().Trim());
 
-            File.WriteAllText(moduleFilename, moduleOutput);
+            File.WriteAllText(moduleFilename, moduleOutput, Encoding.UTF8);
 
             Console.WriteLine("OK");
             #endregion
@@ -245,7 +250,7 @@ namespace NgSwaggerSdkGen {
                         typeof(NgModel)
                     ).GetAwaiter().GetResult().Trim());
 
-                File.WriteAllText(modelFilename, modelOutput);
+                File.WriteAllText(modelFilename, modelOutput, Encoding.UTF8);
             }
             Console.WriteLine("OK");
             #endregion
@@ -268,7 +273,7 @@ namespace NgSwaggerSdkGen {
                         typeof(NgService)
                     ).GetAwaiter().GetResult().Trim());
 
-                File.WriteAllText(serviceFilename, serviceOutput);
+                File.WriteAllText(serviceFilename, serviceOutput, Encoding.UTF8);
             }
             Console.WriteLine("OK");
             #endregion
