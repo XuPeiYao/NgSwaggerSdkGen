@@ -42,7 +42,7 @@ export class @(Model.Name)Service {
         if(@(inQuery.Name) !== null && @(inQuery.Name) !== undefined){
             for(const item of @(inQuery.Name)){
                 if (item) {
-                    queryList.push('@(inQuery.Name)=' + encodeURIComponent(item));
+                    queryList.push('@(inQuery.Name)=' + encodeURIComponent((item).toString()));
                 }
             }
         }

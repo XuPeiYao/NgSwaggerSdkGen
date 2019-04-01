@@ -23,7 +23,7 @@ namespace NgSwaggerSdkGen {
 #if DEBUG
             args = new string[] {
                 "-s",
-                "https://lcy-stage.gofa.cloud/swagger/v1/swagger.json"
+                "https://lcy-stage.project.lightup-studio.com/swagger/v1/swagger.json"
             };
             //args = new string[] { "help" };
 #endif
@@ -148,9 +148,13 @@ namespace NgSwaggerSdkGen {
                             }
                             if (paramInstance.Type.StartsWith("(") &&
                                 param.@enum != null &&
-                                param.@enum.Count > 0 &&
-                                (param.@default is int || param.@default is long)) {
-                                paramInstance.Default = '"' + param.@enum[int.Parse(param.@default.ToString())].ToString() + '"';
+                                param.@enum.Count > 0) {
+                                if (param.@default is int || param.@default is long) {
+                                    paramInstance.Default = '"' + param.@enum[int.Parse(param.@default.ToString())].ToString() + '"';
+                                } else {
+                                    paramInstance.Default = '"' + param.@default.ToString() + '"';
+
+                                }
                             }
                         }
                     }
