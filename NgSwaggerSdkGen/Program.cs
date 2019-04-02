@@ -249,7 +249,8 @@ namespace NgSwaggerSdkGen {
                         new NgModel() {
                             Name = model.Name,
                             Models = models.Where(x => x != model).Select(x => x.Name),
-                            Properties = model.Properties
+                            Properties = model.Properties,
+                            Extends = model.Extends
                         },
                         typeof(NgModel)
                     ).GetAwaiter().GetResult().Trim());
