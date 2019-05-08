@@ -28,7 +28,7 @@ export class @(Model.Name)Service {
 @:
 @:        @(parameter.Name)@(parameter.IsRequired ? "" : (parameter.Default == null ? "?" : "") ): @(parameter.Type)@(parameter.Default != null ? "=" + parameter.Default : "")@(parameter == method.Parameters.OrderByDescending(x=>x.IsRequired).Last() ? "" : ",")
     }
-        ): Observable<@(method.ReturnType==null?"void":method.ReturnType)> {
+        ): Observable<@(method.ReturnType==null?"any":method.ReturnType)> {
         let url = '@method.Url';
 @foreach (var inPath in method.Parameters.Where(x => x.In == "path")) {
     <text>
