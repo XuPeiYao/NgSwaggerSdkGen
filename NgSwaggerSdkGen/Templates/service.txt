@@ -75,7 +75,7 @@ export class @(Model.Name)Service {
         </text>
         }
     }
-        return this.http.@(method.Method)<@(method.ReturnType==null?"void":method.ReturnType)>(
+        return this.http.@(method.Method)<@(method.ReturnType==null?"any":method.ReturnType)>(
             url,
             formData,
             Config.defaultOptions
@@ -98,7 +98,7 @@ export class @(Model.Name)Service {
 			</text>
 		}
 
-        return this.http.@(method.Method)<@(method.ReturnType==null?"void":method.ReturnType)>(
+        return this.http.@(method.Method)<@(method.ReturnType==null?"any":method.ReturnType)>(
             url,
 			@(method.Parameters.FirstOrDefault(x => x.In == "body")?.Type == "string" ? "JSON.stringify(" : "")
             @(method.Parameters.FirstOrDefault(x => x.In == "body")?.Name ?? "{}")
@@ -114,7 +114,7 @@ export class @(Model.Name)Service {
     </text>
     } else {
     <text>
-        return this.http.@(method.Method)<@(method.ReturnType==null?"void":method.ReturnType)>(
+        return this.http.@(method.Method)<@(method.ReturnType==null?"any":method.ReturnType)>(
             url,
             Config.defaultOptions
         ).pipe(
